@@ -1,6 +1,7 @@
-public class Compra {
+public class Compra extends Transacao {
 
     private Integer precoUnit;
+    private Fornecedor fornecedor;
 
     public Integer getPrecoUnit() {
         return precoUnit;
@@ -18,10 +19,10 @@ public class Compra {
         this.fornecedor = fornecedor;
     }
 
-    private Fornecedor fornecedor;
-
-    public Compra(String dataCompra, String produto, String fornecedor, int qtdeCompra, Integer precoUnit) {
-
+    public Compra(String dataCompra, Produto produto, Fornecedor fornecedor, int qtdeCompra, Integer precoUnit) {
+        super(dataCompra, produto, qtdeCompra);
+        this.fornecedor = fornecedor;
+        this.precoUnit = precoUnit;
     }
 
     public String comprar(String produto, int qtdeCompra) {

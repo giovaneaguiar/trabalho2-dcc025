@@ -28,8 +28,10 @@ public class Transacao {
         this.qtde = qtde;
     }
 
-    public Transacao(){
-
+    public Transacao(String dataTransacao, Produto produto, int qtde) {
+        this.dataTransacao = dataTransacao;
+        this.produto = produto;
+        this.qtde = qtde;
     }
 
 

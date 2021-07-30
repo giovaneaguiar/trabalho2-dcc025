@@ -1,10 +1,27 @@
+import java.util.List;
+
 public class Produto {
 
     private String nome;
     private int qtdeEstoque;
-    private Integer precoUnit;
+    private float precoUnit;
     private int estoqueMinimo;
+
+    public void setPrecoUnit(float precoUnit) {
+        this.precoUnit = precoUnit;
+    }
+
+    public List<String> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(List<String> historico) {
+        this.historico = historico;
+    }
+
     private int estoqueMaximo;
+
+    private List<String> historico;
 
     public String getNome() {
         return nome;
@@ -22,7 +39,7 @@ public class Produto {
         this.qtdeEstoque = qtdeEstoque;
     }
 
-    public Integer getPrecoUnit() {
+    public float getPrecoUnit() {
         return precoUnit;
     }
 
@@ -46,25 +63,19 @@ public class Produto {
         this.estoqueMaximo = estoqueMaximo;
     }
 
-    public String getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(String historico) {
-        this.historico = historico;
-    }
-
-    private String historico;
-
     public Produto(String nome,
                    int qtdeEstoque,
-                   Integer precoUnit,
+                   float precoUnit,
                    int estoqueMinimo,
                    int estoqueMaximo) {
         //construtor
+        this.nome = nome;
+        this.qtdeEstoque = qtdeEstoque;
+        this.precoUnit = precoUnit;
+        this.estoqueMinimo = estoqueMinimo;
+        this.estoqueMaximo = estoqueMaximo;
 
         Produto produto1 = new Produto("iPhone 12", 5, 5000, 2, 10);
-
     }
 
     public void registrarHistorico(Transacao transacao) {
@@ -101,12 +112,12 @@ public class Produto {
 
     }
 
-    public void vender(){
+    public void vender() {
 
 
     }
 
-    public void comprar(){
+    public void comprar() {
 
     }
 

@@ -10,9 +10,9 @@ public class Venda extends Transacao {
         this.cliente = cliente;
     }
 
-    public Venda(Venda dataVenda, Cliente cliente, String produto, int tdeVendida) {
-        super();
-
+    public Venda(String dataVenda, Cliente cliente, Produto produto, int qtdeVendida) {
+        super(dataVenda, produto, qtdeVendida);
+        this.cliente = cliente;
     }
 }
 
