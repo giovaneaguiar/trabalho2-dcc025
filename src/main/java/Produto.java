@@ -4,10 +4,14 @@ public class Produto {
 
     private String nome;
     private int qtdeEstoque;
-    private float precoUnit;
+    private Integer precoUnit;
     private int estoqueMinimo;
 
-    public void setPrecoUnit(float precoUnit) {
+    public Integer getPrecoUnit() {
+        return precoUnit;
+    }
+
+    public void setPrecoUnit(Integer precoUnit) {
         this.precoUnit = precoUnit;
     }
 
@@ -39,14 +43,6 @@ public class Produto {
         this.qtdeEstoque = qtdeEstoque;
     }
 
-    public float getPrecoUnit() {
-        return precoUnit;
-    }
-
-    public void setPrecoUnit(Integer precoUnit) {
-        this.precoUnit = precoUnit;
-    }
-
     public int getEstoqueMinimo() {
         return estoqueMinimo;
     }
@@ -65,31 +61,31 @@ public class Produto {
 
     public Produto(String nome,
                    int qtdeEstoque,
-                   float precoUnit,
+                   Integer precoUnit,
                    int estoqueMinimo,
                    int estoqueMaximo) {
-        //construtor
         this.nome = nome;
         this.qtdeEstoque = qtdeEstoque;
         this.precoUnit = precoUnit;
         this.estoqueMinimo = estoqueMinimo;
         this.estoqueMaximo = estoqueMaximo;
-
-        Produto produto1 = new Produto("iPhone 12", 5, 5000, 2, 10);
     }
 
     public void registrarHistorico(Transacao transacao) {
+
     }
 
     public void exibirHistorico() {
     }
 
-    public int debitarEstoque(int qtdeEstoque) {
-        return this.qtdeEstoque;
+    public void debitarEstoque(int quantidade) {
+
+        this.qtdeEstoque = qtdeEstoque - quantidade;
     }
 
-    public int creditarEstoque(int qtdeEstoque) {
-        return this.qtdeEstoque;
+    public void creditarEstoque(int quantidade) {
+
+         this.qtdeEstoque = qtdeEstoque + quantidade;
     }
 
     public boolean verificarEstoqueBaixo() {
@@ -99,26 +95,44 @@ public class Produto {
         return false;
     }
 
-    public boolean verificarEstoqueInsuficiente() {
+    public boolean verificarEstoqueInsuficiente(int quantidade) {
+     if ( this.qtdeEstoque > quantidade){
+         return true;
+     }
+     return false;
+    }
+
+    public boolean verificarEstoqueExcedente(int quantidade) {
+        if ( (this.qtdeEstoque + quantidade) > this.estoqueMaximo){
+            return true;
+        }
+        return false;
+    }
+
+    public float calculaValorVenda(int quantidade) {
+        return this.precoUnit * quantidade;
 
     }
 
-    public boolean verificarEstoqueExcedente() {
+    public void vender(String dataVenda, Cliente cliente, int qtdeVendida) {
+         Venda venda = new Venda("02/05/2000", cliente, this, 90 );
+         //this serve para passar o proprio objeto
+        if(venda.vender(this, qtdeVendida)){
+            //registrar venda no historico
+            registrarHistorico(venda);
 
+        }
     }
 
-    public float calculaValorVenda(int qtdeEstoque) {
-        return this.precoUnit * this.qtdeEstoque;
 
-    }
+    public void comprar(String dataCompra, Fornecedor fornecedor, int qtdeCompra, Integer precoUnit) {
+        Compra compra = new Compra(dataCompra, this, fornecedor, qtdeCompra, precoUnit);
+        //this serve para passar o proprio objeto
+        if(compra.comprar(this,qtdeCompra)){
+            //registrar compra no historico
+            registrarHistorico(compra);
 
-    public void vender() {
-
-
-    }
-
-    public void comprar() {
-
+        }
     }
 
 

@@ -25,7 +25,15 @@ public class Compra extends Transacao {
         this.precoUnit = precoUnit;
     }
 
-    public String comprar(String produto, int qtdeCompra) {
-            return "Teste";
+    public boolean comprar(Produto produto, int qtdeCompra) {
+        if (produto.verificarEstoqueExcedente(qtdeCompra)) {
+            System.out.println("Estoque excedente!");
+            return false;
+        }
+
+        produto.creditarEstoque(qtdeCompra);
+        return true;
+
+
     }
 }
