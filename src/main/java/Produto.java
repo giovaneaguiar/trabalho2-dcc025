@@ -1,11 +1,14 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Produto {
 
+    private List<String> historico = new ArrayList<>();
     private String nome;
     private int qtdeEstoque;
     private Integer precoUnit;
     private int estoqueMinimo;
+    private int estoqueMaximo;
 
     public Integer getPrecoUnit() {
         return precoUnit;
@@ -22,10 +25,6 @@ public class Produto {
     public void setHistorico(List<String> historico) {
         this.historico = historico;
     }
-
-    private int estoqueMaximo;
-
-    private List<String> historico;
 
     public String getNome() {
         return nome;
@@ -44,6 +43,7 @@ public class Produto {
     }
 
     public int getEstoqueMinimo() {
+
         return estoqueMinimo;
     }
 
@@ -64,21 +64,44 @@ public class Produto {
                    Integer precoUnit,
                    int estoqueMinimo,
                    int estoqueMaximo) {
+
+        if ( nome == null){
+            throw new IllegalArgumentException("Não é possível utilizar esse nome!");
+        }
+
+        if (estoqueMinimo < 0){
+            throw new IllegalArgumentException("Valor de estoque mínimo indisponível!");
+
+        }
+        if (estoqueMaximo < 0){
+            throw new IllegalArgumentException("Valor de estoque máximo indisponível!");
+
+        }
         this.nome = nome;
         this.qtdeEstoque = qtdeEstoque;
         this.precoUnit = precoUnit;
         this.estoqueMinimo = estoqueMinimo;
         this.estoqueMaximo = estoqueMaximo;
-    }
-
-    public void registrarHistorico(Transacao transacao) {
 
     }
 
-    public void exibirHistorico() {
+    public void registrarHistorico(String transacao) {
+        //registrando
+       this.historico.add(transacao);
+    }
+
+    public List<String> exibirHistorico() {
+        if (historico == null){
+            throw new NullPointerException("Sem valor no histórico!");
+        }
+        return this.historico;
     }
 
     public void debitarEstoque(int quantidade) {
+
+        if (this.qtdeEstoque - quantidade < 0) {
+            throw new IllegalArgumentException("Quantidade não válida");
+        }
 
         this.qtdeEstoque = qtdeEstoque - quantidade;
     }
@@ -96,10 +119,9 @@ public class Produto {
     }
 
     public boolean verificarEstoqueInsuficiente(int quantidade) {
-     if ( this.qtdeEstoque > quantidade){
-         return true;
-     }
-     return false;
+        if (this.qtdeEstoque >= quantidade)
+            return false;
+        return true;
     }
 
     public boolean verificarEstoqueExcedente(int quantidade) {
@@ -110,16 +132,20 @@ public class Produto {
     }
 
     public float calculaValorVenda(int quantidade) {
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("Quantidade errada!");
+        }
         return this.precoUnit * quantidade;
 
     }
 
     public void vender(String dataVenda, Cliente cliente, int qtdeVendida) {
-         Venda venda = new Venda("02/05/2000", cliente, this, 90 );
+         Venda venda = new Venda(dataVenda, cliente, this, qtdeVendida );
          //this serve para passar o proprio objeto
         if(venda.vender(this, qtdeVendida)){
             //registrar venda no historico
-            registrarHistorico(venda);
+            registrarHistorico(venda.getDataTransacao());
+            registrarHistorico(String.valueOf(venda.getQtde()));
 
         }
     }
@@ -130,8 +156,9 @@ public class Produto {
         //this serve para passar o proprio objeto
         if(compra.comprar(this,qtdeCompra)){
             //registrar compra no historico
-            registrarHistorico(compra);
-
+            registrarHistorico(compra.getDataTransacao());
+            registrarHistorico(String.valueOf(compra.getQtde()));
+            //valueOf - transforma qualquer tipo de dado em um objeto String.
         }
     }
 

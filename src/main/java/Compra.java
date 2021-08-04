@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 public class Compra extends Transacao {
 
     private Integer precoUnit;
@@ -21,17 +23,23 @@ public class Compra extends Transacao {
 
     public Compra(String dataCompra, Produto produto, Fornecedor fornecedor, int qtdeCompra, Integer precoUnit) {
         super(dataCompra, produto, qtdeCompra);
+        if(fornecedor == null){
+            throw new NullPointerException("Valor de fornecedor indisponível");
+        }
+        if(precoUnit == null || precoUnit < 0)
+            throw new IllegalArgumentException("Preço unitário indisponível");
+
         this.fornecedor = fornecedor;
         this.precoUnit = precoUnit;
     }
 
-    public boolean comprar(Produto produto, int qtdeCompra) {
+    public boolean comprar( Produto produto, int qtdeCompra) {
         if (produto.verificarEstoqueExcedente(qtdeCompra)) {
-            System.out.println("Estoque excedente!");
+            produto.registrarHistorico("Excedente!");
             return false;
         }
-
         produto.creditarEstoque(qtdeCompra);
+        produto.registrarHistorico("Transacao: Comprado " + produto.getNome());
         return true;
 
 

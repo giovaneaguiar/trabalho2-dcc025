@@ -1,10 +1,13 @@
 
 public class Venda extends Transacao {
 
-     public Cliente cliente;
+    Cliente cliente;
 
     public Venda(String dataVenda, Cliente cliente, Produto produto, int qtdeVendida) {
         super(dataVenda, produto, qtdeVendida);
+        if (cliente == null) {
+            throw new NullPointerException("Cliente indisponível!");
+        }
         this.cliente = cliente;
     }
 
@@ -20,15 +23,15 @@ public class Venda extends Transacao {
 
     public boolean vender(Produto produto, int qtdeVendida) {
         if (produto.verificarEstoqueInsuficiente(qtdeVendida)) {
-            System.out.println("Estoque insuficiente!");
+            produto.registrarHistorico("Estoque insuficiente!");
             return false;
         }
             produto.debitarEstoque(qtdeVendida);
+            produto.registrarHistorico("Transacao: Vendido " + produto.getNome());
 
-            System.out.println(produto.calculaValorVenda(qtdeVendida));
-
+             produto.calculaValorVenda(qtdeVendida);
             if (produto.verificarEstoqueBaixo()) {
-                System.out.println("Estoque baixo!");
+                produto.registrarHistorico("Estoque baixo!");
                 return true;
             }
 

@@ -29,9 +29,19 @@ public class Transacao {
     }
 
     public Transacao(String dataTransacao, Produto produto, int qtde) {
+
+        //uso de exceção
+        if (qtde < 0){
+            throw new IllegalArgumentException("Esta quantidade não é válida");
+
+        }
+        if (dataTransacao == null){
+            throw new IllegalArgumentException("Esta data de transação não é válida");
+        }
         this.dataTransacao = dataTransacao;
         this.produto = produto;
         this.qtde = qtde;
+
     }
 
 
