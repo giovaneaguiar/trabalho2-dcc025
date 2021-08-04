@@ -39,7 +39,7 @@ public class Compra extends Transacao {
             return false;
         }
         produto.creditarEstoque(qtdeCompra);
-        produto.registrarHistorico("Transacao: Comprado " + produto.getNome());
+        produto.registrarHistorico("Transacao: Comprado um " + produto.getNome());
         return true;
 
 

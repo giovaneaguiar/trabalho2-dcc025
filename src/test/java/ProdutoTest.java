@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProdutoTest {
+
     @Test
     public void deveRetornarExcecaoNomeIndisponivel() {
         try {
@@ -45,9 +46,8 @@ public class ProdutoTest {
         produto.vender("02/05/2000", cliente, 3);
         produto.comprar("02/05/2000", fornecedor, 3, 100);
 
-        List<String> historico = Arrays.asList("Transacao: Vendido Tênis Branco", "Transacao: Comprado Tênis Branco", "02/05/2000", "3");
-        // Arrays.asList()
-        //Retorna uma lista de tamanho fixo suportada pela matriz especificada.
+        List<String> historico = Arrays.asList("Transacao: Vendido um Tênis Branco",
+                "Transacao: Comprado um Tênis Branco", "02/05/2000", "3");
         assertEquals(historico, produto.exibirHistorico());
     }
 
@@ -64,14 +64,14 @@ public class ProdutoTest {
 
     @Test
     public void deveDebitarDoEstoque() {
-        Produto produto = new Produto("Tênis Branco", 30 , 100, 0, 50);
+        Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
         produto.debitarEstoque(8);
 
         assertEquals(22, produto.getQtdeEstoque());
     }
 
     @Test
-    public void deveCreditarDoEstoque() {
+    public void deveCreditarNoEstoque() {
         Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
         produto.creditarEstoque(10);
 
@@ -84,6 +84,7 @@ public class ProdutoTest {
             Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
             produto.debitarEstoque(100);
             fail();
+
         } catch (IllegalArgumentException e) {
             assertEquals("Quantidade não válida", e.getMessage());
         }
@@ -92,24 +93,28 @@ public class ProdutoTest {
     @Test
     public void deveRetornarEstoqueInsuficiente() {
         Produto produto = new Produto("Tênis Branco", 30, 100, 5, 50);
-        assertTrue(produto.verificarEstoqueInsuficiente(40));
+
+        assertEquals(true, produto.verificarEstoqueInsuficiente(40));
     }
 
     @Test
     public void deveRetornarEstoqueBaixo() {
         Produto produto = new Produto("Tênis Branco", 10, 100, 12, 50);
-        assertTrue(produto.verificarEstoqueBaixo());
+
+        assertEquals(true, produto.verificarEstoqueBaixo());
     }
 
     @Test
     public void deveRetornarEstoqueExcedente() {
         Produto produto = new Produto("Tênis Branco", 30, 100, 12, 50);
-        assertTrue(produto.verificarEstoqueExcedente(30));
+
+        assertEquals(true, produto.verificarEstoqueExcedente(30));
     }
 
     @Test
     public void deveRetornarValorVenda() {
         Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
+
         assertEquals(500, produto.calculaValorVenda(5));
     }
 
@@ -118,6 +123,7 @@ public class ProdutoTest {
         try {
             Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
             produto.calculaValorVenda(-20);
+
         } catch (IllegalArgumentException e) {
             assertEquals("Quantidade errada!", e.getMessage());
         }
@@ -128,9 +134,8 @@ public class ProdutoTest {
         Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
         Cliente cliente = new Cliente("Giovane Aguiar", "123456");
         produto.vender("02/05/2000", cliente, 2);
-        List<String> historico = Arrays.asList("Transacao: Vendido Tênis Branco");
-        //Arrays.asList()
-        //Retorna uma lista de tamanho fixo suportada pela matriz especificada.
+
+        List<String> historico = Arrays.asList("Transacao: Vendido um Tênis Branco");
         assertEquals(historico, produto.exibirHistorico());
     }
 
@@ -139,9 +144,8 @@ public class ProdutoTest {
         Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
         Fornecedor fornecedor = new Fornecedor("Luciana de Sousa", "789000");
         produto.comprar("02/05/2000", fornecedor, 5, 1);
-        List<String> historico = Arrays.asList("Transacao: Comprado Tênis Branco", "02/05/2000", "5");
-        //Arrays.asList()
-        //Retorna uma lista de tamanho fixo suportada pela matriz especificada.
+
+        List<String> historico = Arrays.asList("Transacao: Comprado um Tênis Branco", "02/05/2000", "5");
         assertEquals(historico, produto.exibirHistorico());
     }
 
@@ -169,6 +173,7 @@ public class ProdutoTest {
         Produto produto = new Produto("Tênis Branco", 30, 100, 0, 50);
         Fornecedor fornecedor = new Fornecedor("Giovane Aguiar", "123456");
         produto.comprar("02/05/2000", fornecedor, 30, 100);
+
         List<String> historico = Arrays.asList("Excedente!");
         assertEquals(historico, produto.exibirHistorico());
     }
@@ -179,7 +184,8 @@ public class ProdutoTest {
         Cliente cliente = new Cliente("Giovane Aguiar", "123456");
         produto.vender("02/05/2000", cliente, 25);
 
-        List<String> historico = Arrays.asList("Transacao: Vendido Tênis Branco", "Estoque baixo!", "02/05/2000", "25");
+        List<String> historico = Arrays.asList("Transacao: Vendido um Tênis Branco",
+                "Estoque baixo!", "02/05/2000", "25");
         assertEquals(historico, produto.exibirHistorico());
     }
 

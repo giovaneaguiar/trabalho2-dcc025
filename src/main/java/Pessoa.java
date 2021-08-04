@@ -14,6 +14,9 @@ public class Pessoa {
     }
 
     public Pessoa(String nome) {
+        if (nome == null){
+            throw new IllegalArgumentException("Nome nulo!");
+        }
         this.nome = nome;
     }
 }

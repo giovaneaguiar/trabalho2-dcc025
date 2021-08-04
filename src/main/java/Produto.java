@@ -11,34 +11,42 @@ public class Produto {
     private int estoqueMaximo;
 
     public Integer getPrecoUnit() {
+
         return precoUnit;
     }
 
     public void setPrecoUnit(Integer precoUnit) {
+
         this.precoUnit = precoUnit;
     }
 
     public List<String> getHistorico() {
+
         return historico;
     }
 
     public void setHistorico(List<String> historico) {
+
         this.historico = historico;
     }
 
     public String getNome() {
+
         return nome;
     }
 
     public void setNome(String nome) {
+
         this.nome = nome;
     }
 
     public int getQtdeEstoque() {
+
         return qtdeEstoque;
     }
 
     public void setQtdeEstoque(int qtdeEstoque) {
+
         this.qtdeEstoque = qtdeEstoque;
     }
 
@@ -48,22 +56,21 @@ public class Produto {
     }
 
     public void setEstoqueMinimo(int estoqueMinimo) {
+
         this.estoqueMinimo = estoqueMinimo;
     }
 
     public int getEstoqueMaximo() {
+
         return estoqueMaximo;
     }
 
     public void setEstoqueMaximo(int estoqueMaximo) {
+
         this.estoqueMaximo = estoqueMaximo;
     }
 
-    public Produto(String nome,
-                   int qtdeEstoque,
-                   Integer precoUnit,
-                   int estoqueMinimo,
-                   int estoqueMaximo) {
+    public Produto(String nome, int qtdeEstoque, Integer precoUnit, int estoqueMinimo, int estoqueMaximo) {
 
         if ( nome == null){
             throw new IllegalArgumentException("Não é possível utilizar esse nome!");

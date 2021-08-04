@@ -27,7 +27,7 @@ public class Venda extends Transacao {
             return false;
         }
             produto.debitarEstoque(qtdeVendida);
-            produto.registrarHistorico("Transacao: Vendido " + produto.getNome());
+            produto.registrarHistorico("Transacao: Vendido um " + produto.getNome());
 
              produto.calculaValorVenda(qtdeVendida);
             if (produto.verificarEstoqueBaixo()) {
